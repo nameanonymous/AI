@@ -6,10 +6,13 @@ import  transport.BusTimetable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Node {
-    public Node(Node parent,TrainTimetable Toperator,BusTimetable Boperator,Settlement settlement,Time arrival){
+    public Time getArrival() {
+        return arrival;
+    }
+
+    public Node(Node parent, TrainTimetable Toperator, BusTimetable Boperator, Settlement settlement, Time arrival){
         this.parent = parent;
         this.Toperator = Toperator;
         this.Boperator = Boperator;
@@ -31,17 +34,34 @@ public class Node {
         return parent.isIncludeSettlement(s);
         }
 
-        List<Node> successors(){
+    @Override
+    public String toString() {
+        return "Node{" +
+                "parent=" + parent +
+                ", Toperator=" + Toperator +
+                ", Boperator=" + Boperator +
+                ", cost=" + cost +
+                ", settlement=" + settlement +
+                ", arrival=" + arrival +
+                '}';
+    }
+
+    List<Node> successors(){
         ArrayList<Node> succ = new ArrayList<>();
         for (TrainTimetable te : TrainTimetable.TTB){
-            if(!isIncludeSettlement(te.getEnd())){
-                Node n = new Node(this,te,null,te.getEnd(),te.getArrivalTT(arrival));
-                succ.add(n);
+            if(te.getStart() == settlement && te.getDeparture().compareTo(arrival) >=0) {
+                if (!isIncludeSettlement(te.getEnd())) {
+                    Node n = new Node(this, te, null, te.getEnd(), te.getArrivalTT(arrival));
+                    succ.add(n);
+                }
             }
         }
         for (BusTimetable be : BusTimetable.BTB){
-            if(!isIncludeSettlement(be.getEnd())){
-                Node n = new Node(this,null,be,be.getEnd(),be.getArrivalTB(arrival));
+            if(be.getStart() == settlement && be.getDeparture().compareTo(arrival) >=0) {
+                if (!isIncludeSettlement(be.getEnd())) {
+                    Node n = new Node(this, null, be, be.getEnd(), be.getArrivalTB(arrival));
+                    succ.add(n);
+                }
             }
         }
             return succ;

@@ -2,6 +2,10 @@ package transport;
 
 public class Time  implements Comparable<Time> {
 
+    public int getMinute() {
+        return minute;
+    }
+
     int minute;
 
     public Time(int hour, int minute) {
