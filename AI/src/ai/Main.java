@@ -14,9 +14,9 @@ public class Main {
        for (int i = 0;i< n.successors().toArray().length;i++)
            System.out.println(n.successors().get(i));
         System.out.println(" ");
-       Collections.sort(n.successors(),new SortbyDepTime());
-        for (int i = 0;i< n.successors().toArray().length;i++)
-            System.out.println(n.successors().get(i).getArrival().getMinute());
+//       Collections.sort(n.successors(),new SortbyDepTime());
+//        for (int i = 0;i< n.successors().toArray().length;i++)
+//            System.out.println(n.successors().get(i).getArrival().getMinute());
         //1st:IF the arrival time should be considered what should we do?
 
         //2nd:
@@ -25,10 +25,10 @@ public class Main {
         //
     }
 }
-
+//
 //class SortbyDepTime implements Comparator<Node> {
 //    @Override
 //    public int compare(Node a,Node b){
-//        return a.getTimeTable().;
+//        return a.getTimeTable().get;
 //                }
 //    }
