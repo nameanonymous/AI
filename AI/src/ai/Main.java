@@ -10,9 +10,9 @@ import java.util.Timer;
 public class Main {
     public static void main(String[] args) {
         Time a = new Time(6,00);
-       Node n = new Node(null,null,null,Settlement.Budapest, a);
+       Node n = new Node(null,null,Settlement.Budapest,a);
        for (int i = 0;i< n.successors().toArray().length;i++)
-           System.out.println(n.successors().get(i).getArrival().getMinute());
+           System.out.println(n.successors().get(i));
         System.out.println(" ");
        Collections.sort(n.successors(),new SortbyDepTime());
         for (int i = 0;i< n.successors().toArray().length;i++)
@@ -26,14 +26,9 @@ public class Main {
     }
 }
 
-class SortbyDepTime implements Comparator<Node> {
-    @Override
-    public int compare(Node a,Node b){
-        if(a.Toperator != null && b.Toperator != null)
-            return a.Toperator.getDeparture().compareTo(b.Toperator.getDeparture());
-        else if(a.Boperator != null && b.Boperator != null)
-            return a.Boperator.getDeparture().compareTo(b.Boperator.getDeparture());
-        else
-            return -1;
-        }
-    }
+//class SortbyDepTime implements Comparator<Node> {
+//    @Override
+//    public int compare(Node a,Node b){
+//        return a.getTimeTable().;
+//                }
+//    }

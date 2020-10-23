@@ -1,8 +1,5 @@
 package ai;
-import transport.Settlement;
-import transport.Time;
-import transport.TrainTimetable;
-import  transport.BusTimetable;
+import transport.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +9,14 @@ public class Node {
         return arrival;
     }
 
-    public Node(Node parent, TrainTimetable Toperator, BusTimetable Boperator, Settlement settlement, Time arrival){
+    public Node(Node parent, TimeTable timeTable, Settlement settlement, Time arrival){
         this.parent = parent;
-        this.Toperator = Toperator;
-        this.Boperator = Boperator;
+        this.timeTable = timeTable;
         this.settlement = settlement;
         this.arrival = arrival;
     }
     Node parent;
-    TrainTimetable Toperator;
-    BusTimetable Boperator;
+    TimeTable timeTable;
     double cost;
     Settlement settlement;
     Time arrival;
@@ -38,36 +33,33 @@ public class Node {
     public String toString() {
         return "Node{" +
                 "parent=" + parent +
-                ", Toperator=" + Toperator +
-                ", Boperator=" + Boperator +
+                ", timeTable=" + timeTable +
                 ", cost=" + cost +
                 ", settlement=" + settlement +
                 ", arrival=" + arrival +
                 '}';
     }
 
+    public TimeTable getTimeTable() {
+        return timeTable;
+    }
+
     List<Node> successors(){
         ArrayList<Node> succ = new ArrayList<>();
-        for (TrainTimetable te : TrainTimetable.TTB){
-            if(te.getStart() == settlement && te.getDeparture().compareTo(arrival) >=0) {
-                if (!isIncludeSettlement(te.getEnd())) {
-                    Node n = new Node(this, te, null, te.getEnd(), te.getArrivalTT(arrival));
+        for (TimeTable t : Data.TT){
+            TimeTableEntry next = t.getNextTimeTableEntry(arrival);
+            if(next != null){
+            if(t.getStart() == settlement) {
+                if (!isIncludeSettlement(t.getEnd())) {
+                    Node n = new Node(this, t, t.getEnd(), next.getArrival());
                     succ.add(n);
                 }
             }
-        }
-        for (BusTimetable be : BusTimetable.BTB){
-            if(be.getStart() == settlement && be.getDeparture().compareTo(arrival) >=0) {
-                if (!isIncludeSettlement(be.getEnd())) {
-                    Node n = new Node(this, null, be, be.getEnd(), be.getArrivalTB(arrival));
-                    succ.add(n);
-                }
             }
         }
+
             return succ;
         }
 
     }
-
-
 

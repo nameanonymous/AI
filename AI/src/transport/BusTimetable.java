@@ -9,53 +9,56 @@ package transport;
  *
  * @author Masaya Misaizu
 // */
-public class BusTimetable {
+public class BusTimetable implements TimeTable {
 
     final Vehicle v = Vehicle.BUS;
     Settlement start;
     Settlement end;
-    Time departure;//if null means you can depart anytime,anywhere.
+    TimeTableEntry Entry[];//if null means you can depart anytime,anywhere.
     int price;
-    int duration;
     int distance;
 
-    public BusTimetable(Vehicle v,Settlement start, Settlement end, Time departure, int price, int duration,int distance) {
+    public BusTimetable(Settlement start, Settlement end, TimeTableEntry[] entry, int price, int distance) {
         this.start = start;
         this.end = end;
-        this.departure = departure;
+        Entry = entry;
         this.price = price;
-        this.duration = duration;
         this.distance = distance;
     }
-    public Time getArrivalTB(Time start){
-        return departure.add(duration);
-    }
+    public TimeTableEntry getNextTimeTableEntry(Time time){
+        for (TimeTableEntry t:Entry) {
+            if(t.departure.compareTo(time)>=0){
+                return t;
+            }
+        }
+        return null;
+        }
+
+    @Override
     public Vehicle getV() {
         return v;
     }
 
+    @Override
     public Settlement getStart() {
         return start;
     }
 
+    @Override
     public Settlement getEnd() {
         return end;
     }
 
-    public Time getDeparture() {
-        return departure;
+    public TimeTableEntry[] getEntry() {
+        return Entry;
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getDistance() {
+        return distance;
     }
-
-    public static BusTimetable[] BTB = {
-            new BusTimetable(Vehicle.BUS, Settlement.Budapest, Settlement.Eger,new Time(8,23), 5100, 120,120),
-            new BusTimetable(Vehicle.BUS, Settlement.Budapest, Settlement.Eger,new Time(9,23), 5100, 120,120),
-    };
 }
