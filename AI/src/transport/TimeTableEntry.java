@@ -1,6 +1,13 @@
 package transport;
 
 public class TimeTableEntry {
+    @Override
+    public String toString() {
+        return "TimeTableEntry{" +
+                "departure=" + departure +
+                ", arrival=" + arrival +
+                '}';
+    }
 
     Time departure;
     Time arrival;

@@ -8,6 +8,6 @@ public interface TimeTable {
     public Vehicle getV();
     public Settlement getStart();
     public Settlement getEnd();
-    public TimeTableEntry getNextTimeTableEntry(Time time);
+    public SelectedTimeTableEntry getNextTimeTableEntry(Time time);
     public int getPrice();
 }

@@ -25,10 +25,10 @@ public class TrainTimetable implements TimeTable {
         this.price = price;
         this.distance = distance;
     }
-    public TimeTableEntry getNextTimeTableEntry(Time time){
+    public SelectedTimeTableEntry getNextTimeTableEntry(Time time){
         for (TimeTableEntry t:EntryT) {
             if(t.departure.compareTo(time)>=0){
-                return t;
+                return new SelectedTimeTableEntry(this,t);
             }
         }
         return null;

@@ -1,6 +1,11 @@
 package transport;
 
 public class Time  implements Comparable<Time> {
+    @Override
+    public String toString() {
+        return
+                "Time:" + " " + minute/60 +":" + minute%60;
+    }
 
     public int getMinute() {
         return minute;

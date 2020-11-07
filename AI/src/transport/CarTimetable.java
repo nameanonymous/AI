@@ -32,10 +32,7 @@ public class CarTimetable implements TimeTable  {
     }
 
     @Override
-    public TimeTableEntry getNextTimeTableEntry(Time time) {
-        return new TimeTableEntry(time,time.add(duration));
-    }
-
+    public SelectedTimeTableEntry getNextTimeTableEntry(Time time) { return new SelectedTimeTableEntry(this,new TimeTableEntry(time,time.add(duration))); }
     @Override
     public int getPrice() {
         return price;

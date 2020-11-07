@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    public Time getArrival() {
-        return arrival;
-    }
 
-    public Node(Node parent, TimeTable timeTable, Settlement settlement, Time arrival){
+    public Node(Node parent, SelectedTimeTableEntry selectedTimeTableEntry, Settlement settlement, Time arrival){
         this.parent = parent;
-        this.timeTable = timeTable;
         this.settlement = settlement;
+        this.selectedTimeTableEntry = selectedTimeTableEntry;
         this.arrival = arrival;
     }
     Node parent;
-    TimeTable timeTable;
+    SelectedTimeTableEntry selectedTimeTableEntry;
     double cost;
     Settlement settlement;
     Time arrival;
+
+    public Time getArrival() {
+        return arrival;
+    }
 
     boolean isIncludeSettlement(Settlement s){
         if(settlement == s)
@@ -29,29 +30,17 @@ public class Node {
         return parent.isIncludeSettlement(s);
         }
 
-    @Override
-    public String toString() {
-        return "Node{" +
-                "parent=" + parent +
-                ", timeTable=" + timeTable +
-                ", cost=" + cost +
-                ", settlement=" + settlement +
-                ", arrival=" + arrival +
-                '}';
-    }
 
-    public TimeTable getTimeTable() {
-        return timeTable;
-    }
+
 
     List<Node> successors(){
         ArrayList<Node> succ = new ArrayList<>();
         for (TimeTable t : Data.TT){
-            TimeTableEntry next = t.getNextTimeTableEntry(arrival);
+            SelectedTimeTableEntry next = t.getNextTimeTableEntry(arrival);
             if(next != null){
             if(t.getStart() == settlement) {
                 if (!isIncludeSettlement(t.getEnd())) {
-                    Node n = new Node(this, t, t.getEnd(), next.getArrival());
+                    Node n = new Node(this, next, t.getEnd(), next.getTimeTableEntry().getArrival());
                     succ.add(n);
                 }
             }
