@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
+    @Override
+    public String toString() {
+        return "Node{" +
+                "parent=" + parent +
+                ", selectedTimeTableEntry=" + selectedTimeTableEntry +
+                ", settlement=" + settlement +
+                ", arrival=" + arrival +
+                '}';
+    }
 
     public Node(Node parent, SelectedTimeTableEntry selectedTimeTableEntry, Settlement settlement, Time arrival){
         this.parent = parent;
@@ -14,7 +23,6 @@ public class Node {
     }
     Node parent;
     SelectedTimeTableEntry selectedTimeTableEntry;
-    double cost;
     Settlement settlement;
     Time arrival;
 

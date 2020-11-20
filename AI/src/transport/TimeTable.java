@@ -5,9 +5,9 @@ import transport.Time;
 import transport.Vehicle;
 
 public interface TimeTable {
-    public Vehicle getV();
-    public Settlement getStart();
-    public Settlement getEnd();
-    public SelectedTimeTableEntry getNextTimeTableEntry(Time time);
-    public int getPrice();
+    public Vehicle getV();//Get the vhhicle type
+    public Settlement getStart();//Get Currenct location
+    public Settlement getEnd();//Get Destination
+    public SelectedTimeTableEntry getNextTimeTableEntry(Time time);//Get the closest time which is next to the input time from timetable.
+    public int getPrice();//Get the price/cost
 }

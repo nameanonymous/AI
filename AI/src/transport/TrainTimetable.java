@@ -5,6 +5,10 @@
  */
 package transport;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author Masaya Misaizu
@@ -14,21 +18,29 @@ public class TrainTimetable implements TimeTable {
     final Vehicle v  = Vehicle.TRAIN;
     Settlement start;
     Settlement end;
-    TimeTableEntry EntryT[];//if null means you can depart anytime,anywhere.
+    TimeTableEntry Entry[];//if null means you can depart anytime,anywhere.
     int price;
     int distance;
 
     public TrainTimetable(Settlement start, Settlement end, TimeTableEntry[] entryT, int price, int distance) {
         this.start = start;
         this.end = end;
-        EntryT = entryT;
+        Entry = entryT;
         this.price = price;
         this.distance = distance;
     }
     public SelectedTimeTableEntry getNextTimeTableEntry(Time time){
-        for (TimeTableEntry t:EntryT) {
+        for (TimeTableEntry t:Entry) {
             if(t.departure.compareTo(time)>=0){
                 return new SelectedTimeTableEntry(this,t);
+            }
+        }
+        return null;
+    }
+    public  SelectedTimeTableEntry getRevNextTimeTableEntry(Time time){
+        for(int i=Entry.length;i<0;i--){
+            if(Entry[i].arrival.compareTo(time)<=0){
+                return new SelectedTimeTableEntry(this,Entry[i]);
             }
         }
         return null;
@@ -49,8 +61,8 @@ public class TrainTimetable implements TimeTable {
         return end;
     }
 
-    public TimeTableEntry[] getEntryT() {
-        return EntryT;
+    public TimeTableEntry[] getEntry() {
+        return Entry;
     }
 
     @Override
