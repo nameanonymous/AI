@@ -1,12 +1,18 @@
 package transport;
 
-public class TimeTableEntry {
+import java.util.Arrays;
+public class TimeTableEntry implements Comparable<TimeTableEntry>{
     @Override
     public String toString() {
         return "TimeTableEntry{" +
                 "departure=" + departure +
                 ", arrival=" + arrival +
                 '}';
+    }
+
+    @Override
+    public int compareTo(TimeTableEntry timeTableEntry) {
+        return departure.compareTo(timeTableEntry.departure);
     }
 
     Time departure;

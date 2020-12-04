@@ -9,5 +9,6 @@ public interface TimeTable {
     public Settlement getStart();//Get Currenct location
     public Settlement getEnd();//Get Destination
     public SelectedTimeTableEntry getNextTimeTableEntry(Time time);//Get the closest time which is next to the input time from timetable.
+    public double getDistance();
     public int getPrice();//Get the price/cost
 }

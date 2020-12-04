@@ -38,7 +38,7 @@ public class CarTimetable implements TimeTable  {
         return price;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 

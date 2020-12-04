@@ -4,7 +4,7 @@ import transport.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+abstract public class Node<T extends Node> {
     @Override
     public String toString() {
         return "Node{" +
@@ -14,14 +14,23 @@ public class Node {
                 ", arrival=" + arrival +
                 '}';
     }
-
-    public Node(Node parent, SelectedTimeTableEntry selectedTimeTableEntry, Settlement settlement, Time arrival){
+    //For starting point (Node)
+    public Node(Settlement settlement, Time arrival){
         this.parent = parent;
         this.settlement = settlement;
         this.selectedTimeTableEntry = selectedTimeTableEntry;
         this.arrival = arrival;
     }
-    Node parent;
+    //Other usual Nodes
+    public Node(T parent, SelectedTimeTableEntry selectedTimeTableEntry){
+        this.parent = parent;
+        this.settlement = selectedTimeTableEntry.getTimeTable().getEnd();
+        this.selectedTimeTableEntry = selectedTimeTableEntry;
+        this.arrival = selectedTimeTableEntry.getTimeTableEntry().getArrival();
+    }
+
+
+    T parent;
     SelectedTimeTableEntry selectedTimeTableEntry;
     Settlement settlement;
     Time arrival;
@@ -38,17 +47,17 @@ public class Node {
         return parent.isIncludeSettlement(s);
         }
 
+    abstract public T createchild(SelectedTimeTableEntry selectedTimeTableEntry);
 
 
-
-    List<Node> successors(){
-        ArrayList<Node> succ = new ArrayList<>();
+    List<T> successors(){
+        ArrayList<T> succ = new ArrayList<>();
         for (TimeTable t : Data.TT){
             SelectedTimeTableEntry next = t.getNextTimeTableEntry(arrival);
             if(next != null){
             if(t.getStart() == settlement) {
                 if (!isIncludeSettlement(t.getEnd())) {
-                    Node n = new Node(this, next, t.getEnd(), next.getTimeTableEntry().getArrival());
+                    T n = createchild(next);
                     succ.add(n);
                 }
             }
