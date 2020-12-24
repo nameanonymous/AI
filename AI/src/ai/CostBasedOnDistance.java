@@ -8,6 +8,7 @@ public class CostBasedOnDistance implements Cost {
     public double cost(Node node, SelectedTimeTableEntry selectedTimeTableEntry){
             return selectedTimeTableEntry.getTimeTable().getDistance();
     }
+
     public double estimation(Node node, Settlement target){
         int from = -1, to = -1;
 

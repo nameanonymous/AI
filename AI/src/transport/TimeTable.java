@@ -11,4 +11,5 @@ public interface TimeTable {
     public SelectedTimeTableEntry getNextTimeTableEntry(Time time);//Get the closest time which is next to the input time from timetable.
     public double getDistance();
     public int getPrice();//Get the price/cost
+    public default double getPriceperKm(){return getPrice()/getDistance();}
 }

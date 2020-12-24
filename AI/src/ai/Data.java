@@ -2,6 +2,8 @@ package ai;
 
 import transport.*;
 
+import java.util.Arrays;
+
 public class Data {
     public static TimeTable[] TT = {
             new TrainTimetable( Settlement.Budapest, Settlement.Debrecen, new TimeTableEntry[]{
@@ -22,8 +24,10 @@ public class Data {
     };
     public  static Settlement settlements[] = { Settlement.Budapest, Settlement.Debrecen, Settlement.Eger };
     public static double FromTo[][] = {
-            {0,194.14,109.42},
-            {194.14,0,102.30},
-            {109.42,102.30,0}
+            {0,194.14,109.42},//Budapest/Budapest,Debrecen,Eger
+            {194.14,0,102.30},//Debrecen/
+            {109.42,102.30,0}//Eger/
     };
+    public static double HUFperkm = Arrays.stream(TT).mapToDouble(TimeTable::getPriceperKm).min().getAsDouble();
+
 }
